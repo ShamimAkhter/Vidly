@@ -4,18 +4,45 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Vidly.Models;
+using Vidly.ViewModels;
 
 namespace Vidly.Controllers
 {
     public class MoviesController : Controller
     {
+        public ActionResult Index()
+        {
+            var movies = GetMovies();
+
+            return View(movies);
+        }
+
+        private IEnumerable<Movie> GetMovies()
+        {
+            return new List<Movie> 
+            {
+                new Movie() { Name = "Strek" },
+                new Movie() { Name = "Wall-e" }
+            };
+        }
+
         // GET: Movies/Random
         public ActionResult Random()
         {
-            // instance of our Movie model
-            var movie = new Movie() { Name = "Strek!" };
+            var movie = new Movie { Name = "Strek!" };
+            var customers = new List<Customer>
+            {
+                new Customer { Name = "Customer 1" },
+                new Customer { Name = "Customer 2" },
+            };
 
-            return View(movie);
+            var viewModel = new RandomMovieViewModel
+            {
+                Movie = movie,
+                Customers = customers
+            };
+
+            return View(viewModel);
         }
     }
 }
